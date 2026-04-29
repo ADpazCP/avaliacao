@@ -17,8 +17,44 @@
         .form-check { background: #f8f9fa; padding: 12px 12px 12px 40px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 8px; cursor: pointer; transition: 0.2s; }
         .form-check:hover { background: #eef6ff; border-color: #2e86de; }
         .form-check-input { cursor: pointer; }
-        .score-display { font-size: 5rem; font-weight: bold; color: #3498db; margin: 10px 0; }
-        .btn-finish { background-color: #3498db; border: none; color: white; font-weight: bold; padding: 15px; border-radius: 8px; width: 100%; }
+        
+        /* NOVO ESTILO DO MODAL DE SUCESSO (ESTILO WHATSAPP IMAGE) */
+        #final-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #f8f9fa;
+            display: none; /* Escondido por padrão */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .final-modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+        }
+        .success-icon-title {
+            color: #3b82f6;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .final-modal-content p { color: #4b5563; margin: 5px 0; font-size: 1.1rem; }
+        .final-subtext { color: #9ca3af !important; font-size: 0.95rem; margin-top: 20px !important; }
+        .score-badge { 
+            display: inline-block; 
+            margin-top: 15px; 
+            padding: 5px 15px; 
+            border-radius: 20px; 
+            font-weight: bold; 
+            background: #eef6ff; 
+            color: #2e86de; 
+        }
+
         #quizForm { display: none; }
     </style>
 </head>
@@ -172,17 +208,16 @@
     </div>
 </div>
 
-<!-- Modal Resultado Final -->
-<div class="modal fade" id="modalResultado" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center">
-            <div class="modal-body p-5">
-                <h2 class="fw-bold">Avaliação Concluída!</h2>
-                <div id="scoreDisplay" class="score-display">0/10</div>
-                <p id="feedbackText" class="fw-bold mb-4" style="font-size: 1.1rem;"></p>
-                <button class="btn btn-primary btn-lg w-100" onclick="sairDaPagina()">FECHAR E SAIR</button>
-            </div>
+<!-- NOVO OVERLAY DE RESULTADO FINAL (MODO LIMPO) -->
+<div id="final-overlay">
+    <div class="final-modal-content">
+        <div class="success-icon-title">✓ Prova Concluída</div>
+        <p>Suas respostas foram salvas com sucesso.</p>
+        <div id="feedbackContainer" class="mt-3">
+             <div id="scoreBadge" class="score-badge">Nota: --/10</div>
+             <p id="feedbackText" class="mt-3 fw-bold" style="font-size: 1rem;"></p>
         </div>
+        <p class="final-subtext">Você já pode fechar esta janela.</p>
     </div>
 </div>
 
@@ -192,7 +227,6 @@
 
     const mBoasVindas = new bootstrap.Modal(document.getElementById('modalBoasVindas'));
     const mConfirmar = new bootstrap.Modal(document.getElementById('modalConfirmar'));
-    const mResultado = new bootstrap.Modal(document.getElementById('modalResultado'));
 
     window.onload = () => { 
         mBoasVindas.show();
@@ -264,7 +298,7 @@
 
         btn.disabled = true;
         btn.innerText = "ENVIANDO AGUARDE...";
-        status.innerText = "Salvando na planilha e enviando e-mail...";
+        status.innerText = "Corrigindo sua prova e enviando e-mail ao professor...";
 
         const formData = new FormData(form);
         formData.set('data', document.getElementById('dataAtual').value);
@@ -279,38 +313,30 @@
                 if(formData.get('q'+i) === gab['q'+i]) nota++;
             }
 
-            // --- LÓGICA DE FEEDBACK HUMANIZADO ---
-            const scoreEl = document.getElementById('scoreDisplay');
+            // --- EXIBIÇÃO NO NOVO MODAL ---
+            document.getElementById('scoreBadge').innerText = "Sua Nota: " + nota + "/10";
             const feedbackEl = document.getElementById('feedbackText');
-            
-            scoreEl.innerText = nota + "/10";
 
             if (nota >= 9) {
-                feedbackEl.innerText = "Excelente desempenho! Seu conhecimento está afiado. Continue com esse zelo pelo ministério!";
-                feedbackEl.style.color = "#27ae60"; // Verde
+                feedbackEl.innerText = "Excelente desempenho! Continue com esse zelo pelo ministério!";
+                feedbackEl.style.color = "#27ae60";
             } else if (nota >= 7) {
-                feedbackEl.innerText = "Muito bom! Você demonstrou um ótimo entendimento sobre a diaconia. Parabéns!";
-                feedbackEl.style.color = "#2980b9"; // Azul
-            } else if (nota >= 5) {
-                feedbackEl.innerText = "Você teve um aproveitamento regular. É importante revisar o conteúdo para servir com ainda mais excelência!";
-                feedbackEl.style.color = "#f39c12"; // Laranja
+                feedbackEl.innerText = "Muito bom! Você demonstrou um ótimo entendimento. Parabéns!";
+                feedbackEl.style.color = "#2980b9";
             } else {
-                feedbackEl.innerText = "Não desanime! O serviço é um aprendizado constante. Sugerimos uma nova leitura do material para fortalecer seu chamado.";
-                feedbackEl.style.color = "#e74c3c"; // Vermelho
+                feedbackEl.innerText = "Avaliação concluída. É importante revisar o conteúdo para servir com excelência!";
+                feedbackEl.style.color = "#f39c12";
             }
 
-            mResultado.show();
+            // Esconde a prova e mostra o overlay branco final
             document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('final-overlay').style.display = 'flex';
 
         } catch (e) {
             alert("Erro ao enviar. Tente novamente.");
             btn.disabled = false;
             btn.innerText = "FINALIZAR E ENTREGAR";
         }
-    }
-
-    function sairDaPagina() {
-        window.location.href = "about:blank";
     }
 </script>
 </body>
