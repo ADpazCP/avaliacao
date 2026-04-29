@@ -3,78 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionário - Diaconato</title>
+    <title>Questionário - Diaconato ADpaz</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background: #f4f6f9; color: #333; font-size: 0.95rem; }
-        .container-main { max-width: 700px; margin: 15px auto; background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #2e86de; }
+        body { background: #f4f6f9; color: #333; font-size: 0.95rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container-main { max-width: 750px; margin: 20px auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #2e86de; }
         .cabecalho-prova { text-align: center; margin-bottom: 25px; }
-        .titulo-prova { color: #2e86de; text-transform: uppercase; font-weight: bold; font-size: 1.5rem; margin: 0; }
-        .secao-info { background: #e9f2fb; padding: 15px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #d0e1f5; }
-        .question-card { background: #fff; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #eee; }
-        .question-text { font-weight: bold; color: #2c3e50; display: block; margin-bottom: 12px; }
-        .form-check { background: #f8f9fa; padding: 12px 12px 12px 40px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 6px; cursor: pointer; }
+        .titulo-prova { color: #2e86de; text-transform: uppercase; font-weight: bold; font-size: 1.6rem; margin: 0; }
+        .secao-info { background: #e9f2fb; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #d0e1f5; }
+        .question-card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 10px; border: 1px solid #eee; transition: 0.3s; }
+        .question-card:hover { border-color: #2e86de; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .question-text { font-weight: bold; color: #2c3e50; display: block; margin-bottom: 15px; font-size: 1.05rem; }
+        .form-check { background: #f8f9fa; padding: 12px 12px 12px 40px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 8px; cursor: pointer; transition: 0.2s; }
         .form-check:hover { background: #eef6ff; border-color: #2e86de; }
+        .form-check-input { cursor: pointer; }
         .score-display { font-size: 5rem; font-weight: bold; color: #3498db; margin: 10px 0; }
         .btn-finish { background-color: #3498db; border: none; color: white; font-weight: bold; padding: 15px; border-radius: 8px; width: 100%; }
-        .btn-confirm-yes { background-color: #27ae60; border: none; color: white; padding: 12px 25px; border-radius: 8px; font-weight: bold; }
-        .btn-confirm-no { background-color: #e74c3c; border: none; color: white; padding: 12px 25px; border-radius: 8px; font-weight: bold; }
         #quizForm { display: none; }
     </style>
 </head>
 <body>
 
-<!-- Modal de Boas-Vindas -->
+<!-- Modal de Acesso -->
 <div class="modal fade" id="modalBoasVindas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center">
             <div class="modal-body p-5">
-                <h2 class="fw-bold text-primary">Bem-vindo!</h2>
-                <p class="mb-4">Informe seu e-mail para iniciar a avaliação.</p>
+                <h2 class="fw-bold text-primary">Acesso à Prova</h2>
+                <p class="mb-4">Digite seu e-mail cadastrado para liberar o questionário.</p>
                 <div class="mb-3">
-                    <input type="email" id="campoEmail" class="form-control form-control-lg text-center" placeholder="seu-email@exemplo.com" required>
+                    <input type="email" id="campoEmail" class="form-control form-control-lg text-center" placeholder="seu-email@exemplo.com">
                 </div>
                 <button type="button" class="btn btn-primary btn-lg w-100 fw-bold" id="btnIniciar" onclick="validarEmailAntesDeComecar()">
-                    VALIDAR E INICIAR PROVA
+                    VERIFICAR ACESSO
                 </button>
-                <div id="statusEmail" class="mt-3 small fw-bold"></div>
+                <div id="statusEmail" class="mt-3 small"></div>
             </div>
         </div>
     </div>
 </div>
 
 <div class="container" id="mainContainer">
-    <div class="container-main shadow-sm">
+    <div class="container-main">
         <div class="cabecalho-prova">
             <h1 class="titulo-prova">ADpaz - Cidade Praia</h1>
-            <p class="text-muted">Avaliação final para o Diaconato</p>
+            <p class="text-muted">Avaliação para o Corpo Diaconal</p>
         </div>
 
         <form id="quizForm">
-            <div class="secao-info shadow-sm">
+            <div class="secao-info">
                 <div class="row g-3">
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-8">
                         <label class="form-label fw-bold text-primary">Nome Completo:</label>
                         <input type="text" name="nome" class="form-control" required placeholder="DIGITE SEU NOME" oninput="this.value = this.value.toUpperCase()">
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-4">
                         <label class="form-label fw-bold text-primary">Data:</label>
-                        <input type="date" name="data" id="dataAtual" class="form-control" required>
+                        <input type="date" id="dataAtual" name="data" class="form-control" required>
                     </div>
                 </div>
             </div>
 
-            <!-- Início das Questões -->
+            <!-- QUESTÕES -->
             <div class="question-card">
                 <span class="question-text">1. Qual foi a principal razão para a escolha dos primeiros diáconos?</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q1" value="A" id="q1a"><label class="form-check-label" for="q1a">a) Liderar a igreja</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q1" value="B" id="q1b"><label class="form-check-label" for="q1b">b) Administrar o templo</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q1" value="C" id="q1c"><label class="form-check-label" for="q1c">c) Servir às mesas</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q1" value="D" id="q1d"><label class="form-check-label" for="q1d">d) Substituir os apóstolos</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q1" value="A" id="q1a"><label class="form-check-label" for="q1a">a) Liderar a igreja local</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q1" value="B" id="q1b"><label class="form-check-label" for="q1b">b) Administrar as finanças do templo</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q1" value="C" id="q1c"><label class="form-check-label" for="q1c">c) Servir às mesas e cuidar das viúvas</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q1" value="D" id="q1d"><label class="form-check-label" for="q1d">d) Substituir os apóstolos na pregação</label></div>
             </div>
 
             <div class="question-card">
-                <span class="question-text">2. Onde está a instituição dos diáconos?</span>
+                <span class="question-text">2. Onde está registrada a instituição dos diáconos?</span>
                 <div class="form-check"><input class="form-check-input" type="radio" name="q2" value="A" id="q2a"><label class="form-check-label" for="q2a">a) Mateus 5</label></div>
                 <div class="form-check"><input class="form-check-input" type="radio" name="q2" value="B" id="q2b"><label class="form-check-label" for="q2b">b) Atos 6</label></div>
                 <div class="form-check"><input class="form-check-input" type="radio" name="q2" value="C" id="q2c"><label class="form-check-label" for="q2c">c) Romanos 12</label></div>
@@ -82,214 +82,235 @@
             </div>
 
             <div class="question-card">
-                <span class="question-text">3. Característica essencial dos diáconos:</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q3" value="A" id="q3a"><label class="form-check-label" for="q3a">a) Ricos</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q3" value="B" id="q3b"><label class="form-check-label" for="q3b">b) Cheios do Espírito e sabedoria</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q3" value="C" id="q3c"><label class="form-check-label" for="q3c">c) Jovens</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q3" value="D" id="q3d"><label class="form-check-label" for="q3d">d) Fortes</label></div>
+                <span class="question-text">3. Qual destas NÃO é uma característica exigida de um diácono segundo 1 Timóteo 3?</span>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q3" value="A" id="q3a"><label class="form-check-label" for="q3a">a) Ser honesto</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q3" value="B" id="q3b"><label class="form-check-label" for="q3b">b) Ser neófito (novo na fé)</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q3" value="C" id="q3c"><label class="form-check-label" for="q3c">c) Não ser dado a muito vinho</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q3" value="D" id="q3d"><label class="form-check-label" for="q3d">d) Ser marido de uma só mulher</label></div>
             </div>
 
             <div class="question-card">
-                <span class="question-text">4. O termo diácono significa:</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q4" value="A" id="q4a"><label class="form-check-label" for="q4a">a) Líder</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q4" value="B" id="q4b"><label class="form-check-label" for="q4b">b) Mestre</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q4" value="C" id="q4c"><label class="form-check-label" for="q4c">c) Servo</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q4" value="D" id="q4d"><label class="form-check-label" for="q4d">d) Governante</label></div>
+                <span class="question-text">4. A palavra "Diácono" no original grego significa:</span>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q4" value="A" id="q4a"><label class="form-check-label" for="q4a">a) Mestre ou Professor</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q4" value="B" id="q4b"><label class="form-check-label" for="q4b">b) Governador ou Chefe</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q4" value="C" id="q4c"><label class="form-check-label" for="q4c">c) Servo ou Atendente</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q4" value="D" id="q4d"><label class="form-check-label" for="q4d">d) Profeta ou Vidente</label></div>
             </div>
 
             <div class="question-card">
-                <span class="question-text">5. Um dos primeiros diáconos foi:</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q5" value="A" id="q5a"><label class="form-check-label" for="q5a">a) Paulo</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q5" value="B" id="q5b"><label class="form-check-label" for="q5b">b) Pedro</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q5" value="C" id="q5c"><label class="form-check-label" for="q5c">c) Estêvão</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q5" value="D" id="q5d"><label class="form-check-label" for="q5d">d) João</label></div>
+                <span class="question-text">5. Estêvão, um dos primeiros diáconos, destacou-se por:</span>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q5" value="A" id="q5a"><label class="form-check-label" for="q5a">a) Sua riqueza pessoal</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q5" value="B" id="q5b"><label class="form-check-label" for="q5b">b) Suas viagens missionárias a Roma</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q5" value="C" id="q5c"><label class="form-check-label" for="q5c">c) Ser cheio de fé, do Espírito Santo e o primeiro mártir</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q5" value="D" id="q5d"><label class="form-check-label" for="q5d">d) Escrever o livro de Atos</label></div>
             </div>
 
             <div class="question-card">
-                <span class="question-text">6. Os diáconos devem ser:</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q6" value="A" id="q6a"><label class="form-check-label" for="q6a">a) Inexperientes</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q6" value="B" id="q6b"><label class="form-check-label" for="q6b">b) Gananciosos</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q6" value="C" id="q6c"><label class="form-check-label" for="q6c">c) Respeitáveis</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q6" value="D" id="q6d"><label class="form-check-label" for="q6d">d) Autoritários</label></div>
+                <span class="question-text">6. Qual o papel do diácono durante o culto de Santa Ceia?</span>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q6" value="A" id="q6a"><label class="form-check-label" for="q6a">a) Dirigir o louvor</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q6" value="B" id="q6b"><label class="form-check-label" for="q6b">b) Ministrar a palavra principal</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q6" value="C" id="q6c"><label class="form-check-label" for="q6c">c) Auxiliar na organização e distribuição dos elementos</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q6" value="D" id="q6d"><label class="form-check-label" for="q6d">d) Apenas observar</label></div>
             </div>
 
             <div class="question-card">
-                <span class="question-text">7. Qual atitude NÃO condiz com o serviço diaconal?</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q7" value="A" id="q7a"><label class="form-check-label" for="q7a">a) Humildade</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q7" value="B" id="q7b"><label class="form-check-label" for="q7b">b) Amor</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q7" value="C" id="q7c"><label class="form-check-label" for="q7c">c) Busca por reconhecimento</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q7" value="D" id="q7d"><label class="form-check-label" for="q7d">d) Disposição</label></div>
+                <span class="question-text">7. Em relação à submissão, o diácono deve estar sujeito a quem?</span>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q7" value="A" id="q7a"><label class="form-check-label" for="q7a">a) Apenas à sua própria vontade</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q7" value="B" id="q7b"><label class="form-check-label" for="q7b">b) Aos membros da igreja somente</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q7" value="C" id="q7c"><label class="form-check-label" for="q7c">c) À liderança pastoral e ministerial da igreja</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q7" value="D" id="q7d"><label class="form-check-label" for="q7d">d) Ninguém, pois é um cargo autônomo</label></div>
             </div>
 
             <div class="question-card">
-                <span class="question-text">8. Jesus ensinou que:</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q8" value="A" id="q8a"><label class="form-check-label" for="q8a">a) O maior deve ser servido</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q8" value="B" id="q8b"><label class="form-check-label" for="q8b">b) O menor não importa</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q8" value="C" id="q8c"><label class="form-check-label" for="q8c">c) Quem quer ser grande deve servir</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q8" value="D" id="q8d"><label class="form-check-label" for="q8d">d) Só líderes servem</label></div>
+                <span class="question-text">8. Qual deve ser a postura de um diácono na recepção da igreja?</span>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q8" value="A" id="q8a"><label class="form-check-label" for="q8a">a) Postura de autoridade e rigor</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q8" value="B" id="q8b"><label class="form-check-label" for="q8b">b) Postura indiferente</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q8" value="C" id="q8c"><label class="form-check-label" for="q8c">c) Postura de acolhimento, sorriso e educação</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q8" value="D" id="q8d"><label class="form-check-label" for="q8d">d) Conversar o tempo todo com outros diáconos</label></div>
             </div>
 
             <div class="question-card">
-                <span class="question-text">9. Um grande exemplo de serviço de Jesus foi:</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q9" value="A" id="q9a"><label class="form-check-label" for="q9a">a) Multiplicação</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q9" value="B" id="q9b"><label class="form-check-label" for="q9b">b) Cura</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q9" value="C" id="q9c"><label class="form-check-label" for="q9c">c) Lavar os pés dos discípulos</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q9" value="D" id="q9d"><label class="form-check-label" for="q9d">d) Pregação</label></div>
+                <span class="question-text">9. No trabalho de assistência social, o diácono deve ser:</span>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q9" value="A" id="q9a"><label class="form-check-label" for="q9a">a) Divulgador das necessidades alheias</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q9" value="B" id="q9b"><label class="form-check-label" for="q9b">b) Alguém que busca glória pessoal</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q9" value="C" id="q9c"><label class="form-check-label" for="q9c">c) Discreto, amoroso e pronto a servir o necessitado</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q9" value="D" id="q9d"><label class="form-check-label" for="q9d">d) Julgador da condição do pobre</label></div>
             </div>
 
             <div class="question-card">
-                <span class="question-text">10. O serviço do diácono envolve principalmente:</span>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q10" value="A" id="q10a"><label class="form-check-label" for="q10a">a) Poder e status</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q10" value="B" id="q10b"><label class="form-check-label" for="q10b">b) Cuidado com as necessidades e zelo</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q10" value="C" id="q10c"><label class="form-check-label" for="q10c">c) Julgamento</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="q10" value="D" id="q10d"><label class="form-check-label" for="q10d">d) Domínio</label></div>
+                <span class="question-text">10. Qual a importância do testemunho pessoal para um diácono?</span>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q10" value="A" id="q10a"><label class="form-check-label" for="q10a">a) Não tem importância, apenas o serviço conta</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q10" value="B" id="q10b"><label class="form-check-label" for="q10b">b) É fundamental, pois ele representa Cristo e a Igreja</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q10" value="C" id="q10c"><label class="form-check-label" for="q10c">c) Importa apenas dentro do templo</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="q10" value="D" id="q10d"><label class="form-check-label" for="q10d">d) É opcional para quem trabalha no apoio</label></div>
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-bold text-primary">Importância da vida ministerial (Opinião):</label>
-                <textarea name="obs" class="form-control" rows="3" placeholder="Escreva aqui..."></textarea>
+                <label class="form-label fw-bold text-primary">Deixe uma breve opinião sobre o seu chamado ministerial:</label>
+                <textarea name="obs" class="form-control" rows="3" placeholder="Sua resposta aqui..."></textarea>
             </div>
 
-            <button type="button" class="btn btn-primary btn-lg w-100 fw-bold py-3 shadow" id="btnAcaoPrincipal" onclick="validarFormulario()">Finalizar e Entregar</button>
-            <div id="status" class="mt-3 text-center fw-bold text-primary"></div>
+            <button type="button" class="btn btn-primary btn-lg w-100 fw-bold py-3 mt-4" id="btnEnviar" onclick="confirmarEnvio()">FINALIZAR E ENTREGAR</button>
+            <div id="status" class="mt-3 text-center fw-bold"></div>
         </form>
     </div>
 </div>
 
 <!-- Modal Confirmação -->
-<div class="modal fade" id="confirmarModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modalConfirmar" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center"><div class="modal-body p-4">
-            <h2 class="text-primary fw-bold">Finalizar Prova?</h2>
-            <p>Confirme se respondeu tudo corretamente.</p>
-            <div class="d-flex gap-3 justify-content-center mt-4">
-                <button class="btn-confirm-yes" onclick="enviarParaPlanilha()">SIM, ENVIAR</button>
-                <button class="btn-confirm-no" data-bs-dismiss="modal">NÃO, REVISAR</button>
+        <div class="modal-content">
+            <div class="modal-body p-4 text-center">
+                <h3 class="text-primary fw-bold">Deseja enviar agora?</h3>
+                <p>Verifique se respondeu todas as questões.</p>
+                <div class="d-flex gap-2 justify-content-center mt-4">
+                    <button class="btn btn-success px-4 fw-bold" onclick="enviarDados()">SIM, ENVIAR</button>
+                    <button class="btn btn-danger px-4 fw-bold" data-bs-dismiss="modal">REVISAR</button>
+                </div>
             </div>
-        </div></div>
+        </div>
     </div>
 </div>
 
-<!-- Modal Resultado -->
-<div class="modal fade" id="resultadoModal" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+<!-- Modal Resultado Final -->
+<div class="modal fade" id="modalResultado" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center"><div class="modal-body p-5">
-            <h2 class="fw-bold">Resultado</h2>
-            <div id="scoreDisplay" class="score-display">0/10</div>
-            <p id="feedbackText" class="fw-bold mb-4"></p>
-            <button class="btn-finish" onclick="fecharPagina()">CONCLUIR E SAIR</button>
-            <p class="text-muted mt-2 small">Sua prova foi enviada com sucesso.</p>
-        </div></div>
+        <div class="modal-content text-center">
+            <div class="modal-body p-5">
+                <h2 class="fw-bold">Avaliação Concluída!</h2>
+                <div id="scoreDisplay" class="score-display">0/10</div>
+                <p id="feedbackText" class="fw-bold mb-4" style="font-size: 1.1rem;"></p>
+                <button class="btn btn-primary btn-lg w-100" onclick="sairDaPagina()">FECHAR E SAIR</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxBufeCfrHJNYkfEE7lZSBdtgAk9OMMZkUODjj65ultfQx7bBVEW-qwnRXh25S6dto0qA/exec";
-    const gabarito = { q1: "C", q2: "B", q3: "B", q4: "C", q5: "C", q6: "C", q7: "C", q8: "C", q9: "C", q10: "B" };
-    
-    const bModalBoasVindas = new bootstrap.Modal(document.getElementById('modalBoasVindas'));
-    const bModalConfirm = new bootstrap.Modal(document.getElementById('confirmarModal'));
-    const bModalResult = new bootstrap.Modal(document.getElementById('resultadoModal'));
+    const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbyAx548aS8gBSY23dBZLXo29prrsbJwMJqDwT99RJUzNlxbaiytCKSOuVOkKadvVz9atg/exec"; 
+
+    const mBoasVindas = new bootstrap.Modal(document.getElementById('modalBoasVindas'));
+    const mConfirmar = new bootstrap.Modal(document.getElementById('modalConfirmar'));
+    const mResultado = new bootstrap.Modal(document.getElementById('modalResultado'));
 
     window.onload = () => { 
-        bModalBoasVindas.show(); 
-        document.getElementById('dataAtual').valueAsDate = new Date(); 
+        mBoasVindas.show();
+        document.getElementById('dataAtual').valueAsDate = new Date();
     };
 
     async function validarEmailAntesDeComecar() {
         const email = document.getElementById('campoEmail').value.trim();
         const btn = document.getElementById('btnIniciar');
         const status = document.getElementById('statusEmail');
-        if (!email.includes('@')) { alert("E-mail inválido."); return; }
-        btn.disabled = true; btn.innerText = "VERIFICANDO...";
+        
+        if (!email.includes('@')) { alert("Digite um e-mail válido."); return; }
+        
+        btn.disabled = true; 
+        btn.innerText = "VERIFICANDO...";
+        status.innerText = "Consultando permissão...";
+
         try {
             const r = await fetch(`${URL_APPS_SCRIPT}?email=${encodeURIComponent(email)}`);
             const res = await r.json();
-            if (res.enviado) {
-                status.innerText = "Acesso negado: Prova já realizada.";
+
+            if (!res.autorizado) {
+                status.innerText = "⚠️ E-mail não autorizado para esta avaliação.";
                 status.className = "mt-3 text-danger fw-bold";
-                btn.disabled = false; btn.innerText = "VALIDAR";
+                btn.disabled = false; btn.innerText = "TENTAR NOVAMENTE";
+            } else if (res.enviado) {
+                status.innerText = "❌ Você já enviou suas respostas anteriormente.";
+                status.className = "mt-3 text-danger fw-bold";
+                btn.disabled = false; btn.innerText = "VERIFICAR";
             } else {
-                bModalBoasVindas.hide(); 
+                mBoasVindas.hide();
                 document.getElementById('quizForm').style.display = 'block';
-                const hidden = document.createElement("input");
-                hidden.type = "hidden"; hidden.name = "email_candidato"; hidden.value = email;
-                document.getElementById('quizForm').appendChild(hidden);
+                const inputEmail = document.createElement("input");
+                inputEmail.type = "hidden";
+                inputEmail.name = "email_candidato";
+                inputEmail.value = email;
+                document.getElementById('quizForm').appendChild(inputEmail);
             }
-        } catch (e) { 
-            bModalBoasVindas.hide(); 
-            document.getElementById('quizForm').style.display = 'block'; 
+        } catch (e) {
+            alert("Erro na conexão. Verifique se a URL do Script está correta.");
+            btn.disabled = false; btn.innerText = "VERIFICAR";
         }
     }
 
-    function validarFormulario() {
+    function confirmarEnvio() {
         const form = document.getElementById('quizForm');
-        if (!form.nome.value.trim()) { alert("Preencha seu nome."); return; }
+        if (!form.nome.value.trim()) { alert("Por favor, preencha seu nome."); return; }
+
+        let faltantes = [];
         for (let i = 1; i <= 10; i++) {
-            const questao = document.getElementsByName('q' + i);
+            const radios = document.getElementsByName('q' + i);
             let respondida = false;
-            for (let radio of questao) { if (radio.checked) respondida = true; }
-            if (!respondida) {
-                alert("Responda a questão " + i);
-                questao[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
+            for (const r of radios) { if (r.checked) { respondida = true; break; } }
+            if (!respondida) faltantes.push(i);
         }
-        bModalConfirm.show();
+
+        if (faltantes.length > 0) {
+            alert("Atenção! Você não respondeu as questões: " + faltantes.join(", "));
+            return;
+        }
+        mConfirmar.show();
     }
 
-    function enviarParaPlanilha() {
-        bModalConfirm.hide();
-        const btn = document.getElementById('btnAcaoPrincipal');
+    async function enviarDados() {
+        mConfirmar.hide();
+        const btn = document.getElementById('btnEnviar');
         const status = document.getElementById('status');
         const form = document.getElementById('quizForm');
+
+        btn.disabled = true;
+        btn.innerText = "ENVIANDO AGUARDE...";
+        status.innerText = "Salvando na planilha e enviando e-mail...";
+
+        const formData = new FormData(form);
+        formData.set('data', document.getElementById('dataAtual').value);
         
-        btn.disabled = true; 
-        btn.innerText = "ENVIANDO...";
-        status.innerText = "Salvando dados...";
+        try {
+            await fetch(URL_APPS_SCRIPT, { method: 'POST', body: new URLSearchParams(formData) });
+            
+            // --- CÁLCULO DA NOTA ---
+            let nota = 0;
+            const gab = { q1:"C", q2:"B", q3:"B", q4:"C", q5:"C", q6:"C", q7:"C", q8:"C", q9:"C", q10:"B" };
+            for(let i=1; i<=10; i++) {
+                if(formData.get('q'+i) === gab['q'+i]) nota++;
+            }
 
-        let pontos = 0;
-        const d = new FormData(form);
-        for (let [k, v] of d.entries()) { if (gabarito[k] === v) pontos++; }
+            // --- LÓGICA DE FEEDBACK HUMANIZADO ---
+            const scoreEl = document.getElementById('scoreDisplay');
+            const feedbackEl = document.getElementById('feedbackText');
+            
+            scoreEl.innerText = nota + "/10";
 
-        fetch(URL_APPS_SCRIPT, { method: 'POST', body: new URLSearchParams(d) })
-        .then(() => {
-            // Esconde o formulário assim que envia
-            form.style.display = 'none';
+            if (nota >= 9) {
+                feedbackEl.innerText = "Excelente desempenho! Seu conhecimento está afiado. Continue com esse zelo pelo ministério!";
+                feedbackEl.style.color = "#27ae60"; // Verde
+            } else if (nota >= 7) {
+                feedbackEl.innerText = "Muito bom! Você demonstrou um ótimo entendimento sobre o diaconato. Parabéns!";
+                feedbackEl.style.color = "#2980b9"; // Azul
+            } else if (nota >= 5) {
+                feedbackEl.innerText = "Você teve um aproveitamento regular. É importante revisar o conteúdo para servir com ainda mais excelência!";
+                feedbackEl.style.color = "#f39c12"; // Laranja
+            } else {
+                feedbackEl.innerText = "Não desanime! O serviço é um aprendizado constante. Sugerimos uma nova leitura do material para fortalecer seu chamado.";
+                feedbackEl.style.color = "#e74c3c"; // Vermelho
+            }
+
+            mResultado.show();
             document.getElementById('mainContainer').style.display = 'none';
-            exibirResultado(pontos);
-        })
-        .catch(() => {
-            alert("Erro ao salvar. Verifique sua conexão.");
-            btn.disabled = false; 
-            btn.innerText = "Finalizar e Entregar";
-        });
+
+        } catch (e) {
+            alert("Erro ao enviar. Tente novamente.");
+            btn.disabled = false;
+            btn.innerText = "FINALIZAR E ENTREGAR";
+        }
     }
 
-    function exibirResultado(p) {
-        document.getElementById('scoreDisplay').innerText = p + "/10";
-        const f = document.getElementById('feedbackText');
-        f.innerText = p >= 7 ? "Parabéns! Aprovado!" : "Avaliação Concluída.";
-        f.style.color = p >= 7 ? "#27ae60" : "#e67e22";
-        bModalResult.show();
-    }
-
-    function fecharPagina() {
-        bModalResult.hide();
-        window.close();
-        // Fallback caso o navegador bloqueie window.close()
-        setTimeout(() => {
-            document.body.innerHTML = `
-                <div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; background:#f4f6f9;">
-                    <div style="text-align:center; background:white; padding:50px; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
-                        <h1 style="color:#2e86de;">✓ Prova Concluída</h1>
-                        <p style="color:#666; font-size:1.1rem;">Suas respostas foram salvas com sucesso.</p>
-                        <p style="color:#999;">Você já pode fechar esta janela.</p>
-                    </div>
-                </div>
-            `;
-        }, 200);
+    function sairDaPagina() {
+        window.location.href = "about:blank";
     }
 </script>
 </body>
